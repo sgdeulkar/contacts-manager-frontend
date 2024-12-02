@@ -19,6 +19,8 @@ const ContactForm = () => {
 
   const [errors, setErrors] = useState({});
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setContact({ ...contact, [name]: value });
@@ -38,7 +40,7 @@ const ContactForm = () => {
     if (!validate()) return;
 
     try {
-      await axios.post('http://localhost:5000/contacts', contact);
+      await axios.post(`${API_BASE_URL}/contacts`, contact);
       toast.success('Contact added successfully!');
       setTimeout(() => navigate('/'), 2000); // Navigate back to the home page
     } catch (error) {

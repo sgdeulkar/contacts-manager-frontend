@@ -5,10 +5,12 @@ const ContactList = ({ searchQuery }) => {
   const [contacts, setContacts] = useState([]);
   const [editingReminder, setEditingReminder] = useState(null);
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
   // Fetch contacts from the backend
   const fetchContacts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/contacts');
+      const response = await axios.get(`${API_BASE_URL}/contacts`);
       setContacts(response.data);
     } catch (error) {
       console.error('Error fetching contacts:', error);
@@ -17,7 +19,7 @@ const ContactList = ({ searchQuery }) => {
 
   const handleSaveReminder = async (id, reminderDate) => {
     try {
-      await axios.put(`http://localhost:5000/contacts/${id}/reminder`, { reminderDate });
+      await axios.put(`${API_BASE_URL}/contacts/${id}/reminder`, { reminderDate });
       alert('Reminder date updated successfully!');
       setEditingReminder(null);
       fetchContacts();
